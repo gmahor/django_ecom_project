@@ -1,0 +1,187 @@
+{% extends 'ecomm/base.html' %}
+
+{% block title %}
+    home page
+{% endblock %}
+
+{% block style %}
+    <style>
+        html,
+        body,
+        header {
+            height: 60vh;
+        }
+
+        @media (max-width: 740px) {
+
+            html,
+            body,
+            header {
+                height: 100vh;
+            }
+        }
+
+        @media (min-width: 800px) and (max-width: 850px) {
+
+            html,
+            body,
+            header {
+                height: 100vh;
+            }
+        }
+
+    </style>
+{% endblock %}
+
+
+
+{% block body %}
+
+    <main>
+        <div class="container">
+            <div class="table-responsive text-nowrap">
+                <h2 class="text-center  badge-info"><b><u>Order Summary</u></b></h2>
+                <hr>
+                <table class="table">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Item Title</th>
+                        <th scope="col">Price</th>
+                        <th scope="col">Quantity</th>
+                        <th scope="col">Total Item Price</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for order_item in object.items.all %}
+                        <tr>
+                            <th scope="row">{{ forloop.counter }}</th>
+                            <td>{{ order_item.item.title }}</td>
+                            <td>
+                                {% if order_item.item.discount_price %}
+                                    ${{ order_item.item.discount_price }}
+                                    <span class="badge badge-pill badge-danger">Actual Price : ${{ order_item.item.price }}</span>
+                                {% else %}
+                                    ${{ order_item.item.price }}
+                                {% endif %}
+                            </td>
+                            <td>
+                                <a href="{% url 'remove_single_item_from_cart' order_item.item.slug %}"><i
+                                        class="fas fa-minus mr-2"></i></a> {{ order_item.quantity }}
+
+                                <a href="{% url 'add_single_item_to_cart' order_item.item.slug %}">
+                                    <i class="fas fa-plus ml-2"></i></a></td>
+                            <td>
+                                {% if order_item.item.discount_price %}
+                                    ${{ order_item.get_total_discount_item_price }}
+                                    <span class="badge badge-pill badge-primary">Saving ${{ order_item.get_amount_saved }}</span>
+                                {% else %}
+                                    ${{ order_item.get_total_item_price }}
+                                {% endif %}
+                                <a href="{% url 'remove-from-cart' order_item.item.slug %}"><i
+                                        class="fas fa-trash float-right"></i></a>
+                            </td>
+                        </tr>
+                    {% empty %}
+                        <tr>
+                            <td colspan="5"> Your cart is empty</td>
+                        </tr>
+                        <tr>
+                            <td colspan="5">
+                                <a href="/" class="btn btn-warning float-right ml-2">
+                                    Continue Shopping
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    {% if object.coupon %}
+                        <tr>
+                            <td colspan="4"><b>Coupon</b></td>
+                            <td>-${{ object.coupon.amount }}
+                                <br>
+                            </td>
+                        </tr>
+                    {% endif %}
+                    {% if object.get_total %}
+                        <tr>
+                            <td colspan="4"><b>Order Total</b></td>
+                            <td>${{ object.get_total }}
+                                <br>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="5">
+                                <a href="/" class="btn btn-warning float-right ml-2">
+                                    Continue Shopping
+                                </a>
+                                <a href="{% url 'checkout' %}" class="btn btn-success float-right  ">
+                                    Proceed to checkout
+                                </a>
+                            </td>
+                        </tr>
+                    {% endif %}
+                    </tbody>
+                </table>
+
+            </div>
+
+        </div>
+
+    </main>
+    <!--Main layout-->
+
+    <!--Footer-->
+    <footer class="page-footer text-center font-small mt-4 wow fadeIn">
+
+
+        <hr class="my-4">
+
+        <!-- Social icons -->
+        <div class="pb-4">
+            <a href="#">
+                <i class="fab fa-facebook-f mr-3"></i>
+            </a>
+
+            <a href="#">
+                <i class="fab fa-twitter mr-3"></i>
+            </a>
+
+            <a href="#">
+                <i class="fab fa-youtube mr-3"></i>
+            </a>
+
+            <a href="#">
+                <i class="fab fa-google-plus-g mr-3"></i>
+            </a>
+
+            <a href="#">
+                <i class="fab fa-dribbble mr-3"></i>
+            </a>
+
+            <a href="#">
+                <i class="fab fa-pinterest mr-3"></i>
+            </a>
+
+            <a href="#">
+                <i class="fab fa-github mr-3"></i>
+            </a>
+
+            <a href="#">
+                <i class="fab fa-codepen mr-3"></i>
+            </a>
+        </div>
+        <!-- Social icons -->
+
+        <!--Copyright-->
+        <div class="footer-copyright py-3">
+            © 2020 Copyright:
+            <a href="#"> GouravMahor </a>
+        </div>
+        <!--/.Copyright-->
+
+    </footer>
+
+{% endblock %}
+
+

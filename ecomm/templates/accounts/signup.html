@@ -1,0 +1,67 @@
+{% extends 'accounts/base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}
+    register
+{% endblock %}
+{% block css %}
+    color: #757575;
+{% endblock %}
+
+{% block body %}
+    <br>
+    <br>
+    <div class="container py-5 d-flex justify-content-center">
+        <div class="col-6">
+            <div class="card">
+                <h5 class="card-header info-color white-text text-center py-4">
+                    <strong>Sign up</strong>
+                </h5>
+
+                <!--Card content-->
+                <div class="card-body px-lg-5 pt-0">
+
+                    <form class="text-center" method="post">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+
+                        <!-- Sign up button -->
+                        <button class="btn btn-outline-info rounded-pill btn-block my-4 waves-effect z-depth-0"
+                                type="submit">Sign Up
+                        </button>
+                        <p>Back to Login?
+                            <a href="/accounts/login/">Login</a>
+                        </p>
+
+                        <!-- Social register -->
+                        <p>or sign up with:</p>
+
+                        <a type="button" class="btn-floating btn-fb btn-sm">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a type="button" class="btn-floating btn-tw btn-sm">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a type="button" class="btn-floating btn-li btn-sm">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a type="button" class="btn-floating btn-git btn-sm">
+                            <i class="fab fa-github"></i>
+                        </a>
+
+                        <hr>
+
+                        <!-- Terms of service -->
+                        <p>By clicking
+                            <em>Sign up</em> you agree to our
+                            <a href="" target="_blank">terms of service</a>
+
+                    </form>
+                    <!-- Form -->
+
+                </div>
+
+            </div>
+            <!-- Material form register -->
+        </div>
+    </div>
+{% endblock %}

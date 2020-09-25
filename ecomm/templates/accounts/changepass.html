@@ -1,0 +1,38 @@
+{% extends 'accounts/base.html' %}
+{% load crispy_forms_tags %}
+{% block css %}
+    color: #757575;
+{% endblock %}
+{% block body %}
+    <br>
+    <br>
+    <div class="container py-5 d-flex justify-content-center">
+        <div class="col-6">
+            <!-- Material form subscription -->
+            <div class="card">
+
+                <h5 class="card-header info-color white-text text-center py-4">
+                    <strong>Change Password!</strong>
+                </h5>
+
+                <!--Card content-->
+                <div class="card-body px-lg-5">
+                    <form method="post">
+                        {% csrf_token %}
+                        {{ form|crispy }}
+
+                        <!-- Sign in button -->
+                        <button class="btn btn-outline-info rounded-pill btn-block z-depth-0 my-4 waves-effect"
+                                type="submit">Change password
+                        </button>
+
+                    </form>
+                    <!-- Form -->
+
+                </div>
+
+            </div>
+            <!-- Material form subscription -->
+        </div>
+    </div>
+{% endblock %}
